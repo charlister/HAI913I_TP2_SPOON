@@ -4,12 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="35085cd8-2a51-49ee-801f-82bd2ede711d" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/parser/Parser.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/processor/Processor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+    <list default="true" id="35085cd8-2a51-49ee-801f-82bd2ede711d" name="Changes" comment="Structures des exercices précédents">
+      <change afterPath="$PROJECT_DIR$/src/main/java/main/Application.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -87,8 +83,30 @@
       <workItem from="1667754774804" duration="14050000" />
       <workItem from="1667826969659" duration="17671000" />
       <workItem from="1667890073934" duration="6032000" />
-      <workItem from="1667906176070" duration="415000" />
+      <workItem from="1667906176070" duration="796000" />
     </task>
+    <task id="LOCAL-00001" summary="Processeur et parser de projets">
+      <created>1667906678103</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1667906678103</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Processeurs et parser de spoon">
+      <created>1667906719019</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1667906719019</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Structures des exercices précédents">
+      <created>1667906799094</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1667906799094</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -104,5 +122,11 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Processeur et parser de projets" />
+    <MESSAGE value="Processeurs et parser de spoon" />
+    <MESSAGE value="Structures des exercices précédents" />
+    <option name="LAST_COMMIT_MESSAGE" value="Structures des exercices précédents" />
   </component>
 </project>
