@@ -4,18 +4,18 @@ import spoon.processing.AbstractProcessor;
 import spoon.reflect.code.CtInvocation;
 import spoon.reflect.declaration.CtClass;
 import spoon.reflect.declaration.CtElement;
-import utils.Graph;
+import utils.graph.AbstractGraph;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class InvocationProcessor extends AbstractProcessor<CtInvocation> {
-    private Graph couplingGraph;
+    private AbstractGraph couplingGraph;
     private List<String> qualifiedNameOfApplicationClasses;
 
     private List<CtInvocation> ctInvocations;
 
-    public InvocationProcessor(Graph couplingGraph, List<String> qualifiedNameOfApplicationClasses) {
+    public InvocationProcessor(AbstractGraph couplingGraph, List<String> qualifiedNameOfApplicationClasses) {
         this.couplingGraph = couplingGraph;
         this.qualifiedNameOfApplicationClasses = qualifiedNameOfApplicationClasses;
         this.ctInvocations = new ArrayList<>();

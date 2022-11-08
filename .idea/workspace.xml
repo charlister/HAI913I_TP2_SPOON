@@ -4,8 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="35085cd8-2a51-49ee-801f-82bd2ede711d" name="Changes" comment="Structures des exercices précédents">
-      <change afterPath="$PROJECT_DIR$/src/main/java/main/Application.java" afterDir="false" />
+    <list default="true" id="35085cd8-2a51-49ee-801f-82bd2ede711d" name="Changes" comment="CLI pour tester le traitement des données avec Spoon">
+      <change afterPath="$PROJECT_DIR$/src/main/java/utils/graph/CouplingGraph.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/utils/graph/Edge.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/utils/graph/WeightEdge.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/processor/Processor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/processor/Processor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/spoonlocal/spoonprocessors/ClassProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/spoonlocal/spoonprocessors/ClassProcessor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/spoonlocal/spoonprocessors/InvocationProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/spoonlocal/spoonprocessors/InvocationProcessor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/utils/Graph.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/utils/graph/AbstractGraph.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -83,7 +91,7 @@
       <workItem from="1667754774804" duration="14050000" />
       <workItem from="1667826969659" duration="17671000" />
       <workItem from="1667890073934" duration="6032000" />
-      <workItem from="1667906176070" duration="796000" />
+      <workItem from="1667906176070" duration="11102000" />
     </task>
     <task id="LOCAL-00001" summary="Processeur et parser de projets">
       <created>1667906678103</created>
@@ -106,7 +114,14 @@
       <option name="project" value="LOCAL" />
       <updated>1667906799094</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="CLI pour tester le traitement des données avec Spoon">
+      <created>1667907012051</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1667907012051</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -115,6 +130,31 @@
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
       <map>
+        <entry key="220024a4-d180-40fc-9e63-89f0a7cf6ca9">
+          <value>
+            <State>
+              <option name="SHOW_ONLY_AFFECTED_CHANGES" value="true" />
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="HEAD" />
+                      </list>
+                    </value>
+                  </entry>
+                  <entry key="structure">
+                    <value>
+                      <list>
+                        <option value="dir:C:/Users/senio/IdeaProjects/ERL/Test/TP2_SPOON/src/main/java/utils/graph" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
         <entry key="MAIN">
           <value>
             <State />
@@ -122,11 +162,17 @@
         </entry>
       </map>
     </option>
+    <option name="OPEN_GENERIC_TABS">
+      <map>
+        <entry key="220024a4-d180-40fc-9e63-89f0a7cf6ca9" value="TOOL_WINDOW" />
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Processeur et parser de projets" />
     <MESSAGE value="Processeurs et parser de spoon" />
     <MESSAGE value="Structures des exercices précédents" />
-    <option name="LAST_COMMIT_MESSAGE" value="Structures des exercices précédents" />
+    <MESSAGE value="CLI pour tester le traitement des données avec Spoon" />
+    <option name="LAST_COMMIT_MESSAGE" value="CLI pour tester le traitement des données avec Spoon" />
   </component>
 </project>

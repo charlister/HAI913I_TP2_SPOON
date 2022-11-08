@@ -2,16 +2,16 @@ package spoonlocal.spoonprocessors;
 
 import spoon.processing.AbstractProcessor;
 import spoon.reflect.declaration.CtClass;
-import utils.Graph;
+import utils.graph.AbstractGraph;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ClassProcessor extends AbstractProcessor<CtClass> {
     private List<String> qualifiedNameOfApplicationClasses;
-    private Graph graph;
+    private AbstractGraph graph;
 
-    public ClassProcessor(Graph graph) {
+    public ClassProcessor(AbstractGraph graph) {
         this.qualifiedNameOfApplicationClasses = new ArrayList<>();
         this.graph = graph;
     }

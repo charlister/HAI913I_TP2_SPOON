@@ -8,10 +8,13 @@ import guru.nidi.graphviz.parse.Parser;
 import spoonlocal.spoonparser.SpoonParser;
 import spoonlocal.spoonprocessors.ClassProcessor;
 import spoonlocal.spoonprocessors.InvocationProcessor;
-import utils.Graph;
+import utils.graph.CouplingGraph;
+import utils.graph.Edge;
+import utils.graph.AbstractGraph;
 import utils.cluster.Cluster;
 import utils.cluster.ICluster;
 import utils.cluster.SimpleCluster;
+import utils.graph.WeightEdge;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -22,19 +25,19 @@ import java.util.stream.Collectors;
 import static java.lang.String.format;
 
 public class Processor {
-	private Graph graph;
+	private AbstractGraph graph;
 
 	public Processor() {
-		this.graph = new Graph();
+		this.graph = new CouplingGraph();
 	}
 
 	public float couplage(String classe1, String classe2) {
-		Graph.Edge edge = graph.findEdge(classe1, classe2);
+		WeightEdge edge = (WeightEdge) graph.findEdge(classe1, classe2);
 		float a = edge == null ? 0 : edge.getWeight();
 		float b = 0;
-		for (Graph.Edge e :
+		for (Edge e :
 				graph.getEdges()) {
-			b += e.getWeight();
+			b += ((WeightEdge) e).getWeight();
 		}
 		return a/b;
 	}
@@ -146,8 +149,8 @@ public class Processor {
 		FileWriter fW = new FileWriter(fileGraphPath);
 		fW.write("digraph CouplingGraph {\n");
 		fW.write("edge[dir=none]\n");
-		for (Graph.Edge edge : graph.getEdges()) {
-			fW.write("\""+edge.getNode1()+"\""+"->"+"\""+edge.getNode2()+"\""+ format(" [ label=\"%s\" ]", edge.getWeight())+"\n");
+		for (Edge edge : graph.getEdges()) {
+			fW.write("\""+edge.getNode1()+"\""+"->"+"\""+edge.getNode2()+"\""+ format(" [ label=\"%s\" ]", ((WeightEdge) edge).getWeight())+"\n");
 		}
 		fW.write("}");
 		fW.close();
