@@ -8,13 +8,11 @@ import guru.nidi.graphviz.parse.Parser;
 import spoonlocal.spoonparser.SpoonParser;
 import spoonlocal.spoonprocessors.ClassProcessor;
 import spoonlocal.spoonprocessors.InvocationProcessor;
-import utils.graph.CouplingGraph;
-import utils.graph.Edge;
-import utils.graph.AbstractGraph;
 import utils.cluster.Cluster;
 import utils.cluster.ICluster;
 import utils.cluster.SimpleCluster;
-import utils.graph.WeightEdge;
+import utils.graph.WeightedCouplingGraph;
+import utils.graph.WeightedEdge;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -25,36 +23,39 @@ import java.util.stream.Collectors;
 import static java.lang.String.format;
 
 public class Processor {
-	private AbstractGraph graph;
+	private WeightedCouplingGraph couplingGraph;
 
 	public Processor() {
-		this.graph = new CouplingGraph();
+		this.couplingGraph = new WeightedCouplingGraph();
 	}
 
 	public float couplage(String classe1, String classe2) {
-		WeightEdge edge = (WeightEdge) graph.findEdge(classe1, classe2);
+		WeightedEdge edge = couplingGraph.findEdge(classe1, classe2);
 		float a = edge == null ? 0 : edge.getWeight();
 		float b = 0;
-		for (Edge e :
-				graph.getEdges()) {
-			b += ((WeightEdge) e).getWeight();
+		for (WeightedEdge e :
+				couplingGraph.getEdges()) {
+			b += e.getWeight();
 		}
 		return a/b;
 	}
 
 	/* EXERCICE 2 */
-
 	public float calculateCouplingBetweenClusters (ICluster cluster1, ICluster cluster2) {
 		float result = 0;
 		float divisor = 0;
 
-		List<String> monoClusters1 = cluster1.getClusterClasses();
-		List<String> monoClusters2 = cluster2.getClusterClasses();
-
-		for (String classMonoClusters1 : monoClusters1) {
-			for (String classMonoClusters2 : monoClusters2) {
-				if (!classMonoClusters1.equals(classMonoClusters2)) {
-					float tmp = couplage(classMonoClusters1, classMonoClusters2);
+		List<String> monoClusters = new ArrayList<>();
+		monoClusters.addAll(cluster1.getClusterClasses());
+		monoClusters.addAll(cluster2.getClusterClasses());
+		int n = monoClusters.size();
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < n; j++) {
+				if (i==j) {
+					j = n;
+				}
+				else {
+					float tmp = couplage(monoClusters.get(i), monoClusters.get(j));
 					result += tmp;
 					divisor++;
 				}
@@ -62,7 +63,7 @@ public class Processor {
 		}
 
 		result /= divisor;
-        System.err.println(format("(%s ; %s) = %f", cluster1, cluster2, result));
+		System.err.println(format("(%s ; %s) = %f", cluster1, cluster2, result));
 
 		return result;
 	}
@@ -86,10 +87,13 @@ public class Processor {
 		return newBestClusterIndex;
 	}
 
-	public ICluster clusteringHierarchic() {
+	public ICluster clusteringHierarchic() throws InterruptedException {
 		int[] newBestClusterIndex;
 		Cluster mainCluster = new Cluster();
-		List<String> classes = graph.getNodes();
+		List<String> classes = couplingGraph.getNodes()
+				.stream()
+				.map(node -> node.toString())
+				.collect(Collectors.toList());
 		for (String className : classes) {
 			SimpleCluster simpleCluster = new SimpleCluster(className);
 			mainCluster.addCluster(simpleCluster);
@@ -101,10 +105,13 @@ public class Processor {
 			Cluster newBestCluster = new Cluster();
 			newBestCluster.addCluster(mainCluster.getSubClusters().get(newBestClusterIndex[0]));
 			newBestCluster.addCluster(mainCluster.getSubClusters().get(newBestClusterIndex[1]));
+
+			int index1 = newBestClusterIndex[1];
+			boolean decreaseIndex1 = index1>0;
 			/*enlever c1*/
-			mainCluster.getSubClusters().remove(newBestClusterIndex[0]);
+			mainCluster.removeCluster(newBestClusterIndex[0]);
 			/*enlever c2*/
-			mainCluster.getSubClusters().remove(newBestClusterIndex[1]-1);
+			mainCluster.removeCluster(newBestClusterIndex[1]-(decreaseIndex1 ? 1 : 0));
 			/*ajouter c3*/
 			mainCluster.addCluster(newBestCluster);
 		}
@@ -133,7 +140,7 @@ public class Processor {
 		Map<ICluster, Float> mapModuleCoupling = identifyModulesBis(cluster, CP);
 
 		// sélectionner les meilleurs modules avec une limite de M/2
-		int M = graph.getNodes().size();
+		int M = couplingGraph.getNodes().size();
 		modules = mapModuleCoupling
 				.entrySet()
 				.stream()
@@ -145,12 +152,26 @@ public class Processor {
 		return modules;
 	}
 
+	// Draw/Display graph
+
 	public void writeWeightedCouplingGraphInDotFile(String fileGraphPath) throws IOException {
 		FileWriter fW = new FileWriter(fileGraphPath);
-		fW.write("digraph CouplingGraph {\n");
+		fW.write("digraph WeightedCouplingGraph {\n");
 		fW.write("edge[dir=none]\n");
-		for (Edge edge : graph.getEdges()) {
-			fW.write("\""+edge.getNode1()+"\""+"->"+"\""+edge.getNode2()+"\""+ format(" [ label=\"%s\" ]", ((WeightEdge) edge).getWeight())+"\n");
+		for (WeightedEdge edge : couplingGraph.getEdges()) {
+			fW.write("\""+edge.getNode1()+"\""+"->"+"\""+edge.getNode2()+"\""+ format(" [ label=\"%s\" ]", edge.getWeight())+"\n");
+		}
+		fW.write("}");
+		fW.close();
+		convertDotToSVG(fileGraphPath);
+	}
+
+	public void writeWeightedCouplingGraphInDotFile(String fileGraphPath, WeightedCouplingGraph weightedCouplingGraph) throws IOException {
+		FileWriter fW = new FileWriter(fileGraphPath);
+		fW.write("digraph WeightedCouplingGraph {\n");
+		fW.write("edge[dir=none]\n");
+		for (WeightedEdge edge : weightedCouplingGraph.getEdges()) {
+			fW.write("\""+edge.getNode1()+"\""+"->"+"\""+edge.getNode2()+"\""+ format(" [ label=\"%s\" ]", edge.getWeight())+"\n");
 		}
 		fW.write("}");
 		fW.close();
@@ -170,17 +191,16 @@ public class Processor {
 	}
 
 	public void analyse(String projectPath) {
-		ClassProcessor classProcessor = new ClassProcessor(graph);
+		ClassProcessor classProcessor = new ClassProcessor(this.couplingGraph);
 
 		SpoonParser spoonParser = new SpoonParser(projectPath);
-		spoonParser.configure();
 		spoonParser.addProcessor(classProcessor);
 
-		InvocationProcessor invocationProcessor = new InvocationProcessor(graph, classProcessor.getQualifiedNameOfApplicationClasses());
+		InvocationProcessor invocationProcessor = new InvocationProcessor(this.couplingGraph, classProcessor.getQualifiedNameOfApplicationClasses());
 		spoonParser.addProcessor(invocationProcessor);
 
 		spoonParser.run();
 
-		System.out.println(graph);
+		System.out.println(this.couplingGraph);
 	}
 }

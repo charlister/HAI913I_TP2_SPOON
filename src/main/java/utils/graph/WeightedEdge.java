@@ -1,9 +1,9 @@
 package utils.graph;
 
-public class WeightEdge extends Edge{
+public class WeightedEdge extends Edge<Node>{
     private int weight;
 
-    public WeightEdge(String node1, String node2) {
+    public WeightedEdge(Node node1, Node node2) {
         super(node1, node2);
         this.weight = 1;
     }

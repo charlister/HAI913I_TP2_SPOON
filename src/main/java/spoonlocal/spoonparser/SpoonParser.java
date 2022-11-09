@@ -11,20 +11,16 @@ public class SpoonParser extends Parser<Launcher> {
 		super(projectPath);
 	}
 	
-	public void setLauncher(String sourceOutputPath, String binaryOutputPath, 
-			boolean autoImports, boolean commentsEnabled) {
+	public void setLauncher(boolean autoImports, boolean commentsEnabled) {
 		parser = new Launcher(); // create launcher
 		parser.addInputResource(getProjectSrcPath()); // set project source path
-//		spoonparser.getEnvironment().setSourceClasspath(new String[] {getProjectBinPath()}); // set project classpath
-		parser.setSourceOutputDirectory(sourceOutputPath); // set generated source code directory path
-		parser.setBinaryOutputDirectory(binaryOutputPath); // set generated binary code directory path
 		parser.getEnvironment().setAutoImports(autoImports); // set auto imports
 		parser.getEnvironment().setCommentEnabled(commentsEnabled); // set comments enabled
 	}
 
 	
 	public void configure() {
-		setLauncher(projectPath+"/spooned/src/", projectPath+"/spooned/bin/", true, true);
+		setLauncher(true, true);
 	}
 
 	public void addProcessor(Processor<?> processor) {
